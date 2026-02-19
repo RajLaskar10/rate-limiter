@@ -120,10 +120,4 @@ Requires a running Redis instance. Tests use db=1 to avoid interfering with dev 
 
 ---
 
-## Resume Bullets
 
-- Built a Redis-backed rate limiter API with FastAPI, implementing the token bucket algorithm with WATCH/MULTI/EXEC for atomic concurrency control
-- Designed three configurable rate limit tiers (default, strict, relaxed) with independent capacity and refill-rate parameters
-- Created a Streamlit dashboard for real-time visualization of token bucket state and request outcomes
-- Load tested with Locust at 100/500/1000 concurrent users; measured throughput, latency, and blocking rates
-- Deployed to AWS EC2 with a systemd service for zero-downtime process management
