@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+redis
+pydantic
+pydantic-settings
+streamlit
+locust
+pytest
+requests
+pandas
+python-dotenv
