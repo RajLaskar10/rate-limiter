@@ -4,7 +4,10 @@ import pandas as pd
 import requests
 import streamlit as st
 
-API_URL = st.secrets.get("API_URL", "http://localhost:8000")
+try:
+    API_URL = st.secrets["API_URL"]
+except (KeyError, FileNotFoundError):
+    API_URL = "http://localhost:8000"
 
 st.set_page_config(page_title="Rate Limiter Dashboard", layout="wide")
 st.title("Rate Limiter Dashboard")
@@ -41,7 +44,7 @@ try:
         col3.metric("Tokens Remaining", "N/A")
 except requests.exceptions.ConnectionError:
     col3.metric("Tokens Remaining", "N/A")
-    st.error("Could not connect to the API. Make sure it is running on http://localhost:8000")
+    st.error(f"Could not connect to the API at {API_URL}")
 
 # --- Charts ---
 chart_col1, chart_col2 = st.columns(2)
@@ -88,7 +91,7 @@ if running:
         else:
             placeholder.error(f"API error: {resp.status_code}")
     except requests.exceptions.ConnectionError:
-        st.error("Could not connect to the API. Make sure it is running on http://localhost:8000")
+        st.error(f"Could not connect to the API at {API_URL}")
 
     time.sleep(delay)
     st.rerun()
