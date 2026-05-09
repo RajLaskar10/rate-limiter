@@ -1,10 +1,26 @@
 # Rate Limiter
 
-A Redis-backed rate limiting API using the token bucket algorithm. Built with FastAPI and Python.
+A Redis-backed rate limiting API using the token bucket algorithm. Built with FastAPI and Python, deployed on AWS EC2.
 
 ## What It Does
 
 This service sits in front of your application and decides whether a given request should be allowed or blocked based on configurable rate limits. Each client (identified by a string like a user ID or IP address) gets a token bucket that refills at a steady rate and caps at a maximum capacity.
+
+## Architecture
+
+```mermaid
+graph TD
+    Browser -->|port 8000| FastAPI
+    Browser -->|port 8501| Streamlit
+    Locust -->|load test| FastAPI
+    Streamlit -->|localhost:8000| FastAPI
+    FastAPI -->|WATCH/MULTI/EXEC| Redis
+    subgraph EC2 t2.micro
+        FastAPI
+        Streamlit
+        Redis
+    end
+```
 
 ## Tech Stack
 
@@ -56,6 +72,23 @@ Check whether a request should be allowed.
 | default  | 10       | 2 tokens/sec  |
 | strict   | 5        | 0.5 tokens/sec|
 | relaxed  | 50       | 10 tokens/sec |
+
+## Screenshots
+
+### Swagger UI — allowed request
+![Swagger allowed](docs/screenshots/swagger-allowed.png)
+
+### Swagger UI — blocked request (bucket empty)
+![Swagger blocked](docs/screenshots/swagger-blocked.png)
+
+### Streamlit Dashboard — live token drain under strict rule
+![Dashboard live](docs/screenshots/dashboard-live.png)
+
+### Streamlit Dashboard — allowed vs blocked over time
+![Dashboard early](docs/screenshots/dashboard-early.png)
+
+### Locust Load Test — 100 users, ~300 RPS
+![Locust load test](docs/screenshots/locust-load-test.png)
 
 ## Getting Started
 
@@ -119,5 +152,3 @@ pytest tests/unit_test.py -v
 Requires a running Redis instance. Tests use db=1 to avoid interfering with dev data.
 
 ---
-
-

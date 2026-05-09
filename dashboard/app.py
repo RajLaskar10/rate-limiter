@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-API_URL = "http://localhost:8000"
+API_URL = st.secrets.get("API_URL", "http://localhost:8000")
 
 st.set_page_config(page_title="Rate Limiter Dashboard", layout="wide")
 st.title("Rate Limiter Dashboard")

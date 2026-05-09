@@ -20,3 +20,6 @@ env/
 
 # Antigravity instructions (excluded from repo)
 antigravity-rate-limiter.md
+
+# Claude Code guidance (local only)
+CLAUDE.md
