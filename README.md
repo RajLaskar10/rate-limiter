@@ -2,6 +2,8 @@
 
 A Redis-backed rate limiting API using the token bucket algorithm. Built with FastAPI and Python, deployed on AWS EC2.
 
+**Live dashboard:** https://rate-limiter-p4sy2w3onycbpntucxzwzx.streamlit.app/
+
 ## What It Does
 
 This service sits in front of your application and decides whether a given request should be allowed or blocked based on configurable rate limits. Each client (identified by a string like a user ID or IP address) gets a token bucket that refills at a steady rate and caps at a maximum capacity.
